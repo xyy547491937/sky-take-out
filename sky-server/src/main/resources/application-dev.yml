@@ -1,0 +1,8 @@
+sky:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    host: my0419194.xincache1.cn
+    port: 3306
+    database: my0419194
+    username: my0419194
+    password: xyy13011328679
