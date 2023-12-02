@@ -6,15 +6,19 @@ import com.sky.constant.MessageConstant;
 import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.context.BaseContext;
-import com.sky.dto.EmployeeDTO;
-import com.sky.dto.EmployeeLoginDTO;
-import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.*;
+import com.sky.entity.Category;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
+import com.sky.exception.DeletionNotAllowedException;
 import com.sky.exception.PasswordErrorException;
+import com.sky.mapper.CategoryMapper;
+import com.sky.mapper.DishMapper;
 import com.sky.mapper.EmployeeMapper;
+import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
+import com.sky.service.CategoryService;
 import com.sky.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -55,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         //密码比对
         // 生成md5
         String s = DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
-        log.info("生成的md5 密码为{}",s);
+        log.info("生成的md5 密码为{}", s);
         if (!s.equals(employee.getPassword())) {
             //密码错误
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
@@ -71,13 +75,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /*
-    * 新增员工
-    * */
+     * 新增员工
+     * */
     @Override
     public void save(EmployeeDTO employeeDTO) {
-        Employee employee  =new Employee();
+        Employee employee = new Employee();
         // 对象属性拷贝
-        BeanUtils.copyProperties(employeeDTO,employee);
+        BeanUtils.copyProperties(employeeDTO, employee);
         // 1正常 0 锁定 常量 避免硬编码
         employee.setStatus(StatusConstant.ENABLE);
 
@@ -104,7 +108,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
         // 分页查询
 
-        PageHelper.startPage(employeePageQueryDTO.getPage(),employeePageQueryDTO.getPageSize());
+        PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
 
         Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
 
@@ -114,5 +118,46 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return pageResult;
     }
+
+    /*
+     * 启用禁用员工账号
+     * */
+    @Override
+    public void startOrStop(Integer status, long id) {
+//        Employee employee = new Employee();
+//        employee.setStatus(status);
+//        employee.setId(id);
+
+
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+        employeeMapper.update(employee);
+    }
+
+    /*
+    根据用户id 查询用户所有信息
+    * */
+
+    @Override
+    public Employee getUserById(Integer id) {
+
+        Employee employee = employeeMapper.getUserById(id);
+        return employee;
+    }
+
+    @Override
+    public void update(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        // 赋值
+
+        BeanUtils.copyProperties(employeeDTO,employee);
+
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+        employeeMapper.update(employee);
+    }
+
 
 }
