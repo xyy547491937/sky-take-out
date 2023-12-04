@@ -13,8 +13,13 @@ import java.util.List;
 public interface DishFlavorMapper {
 
     /*
-    * 新增口味表
-    * */
+     * 新增口味表
+     * */
     @Insert("insert into dish_flavor( dish_id, name, value) VALUES (#{dishId},#{name},#{value})")
     void insert(DishFlavor dishFlavor);
+
+    /*
+     * 删除
+     * */
+    void delete(List<Long> ids);
 }

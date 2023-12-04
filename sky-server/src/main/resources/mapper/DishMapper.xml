@@ -2,19 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sky.mapper.DishMapper">
+<!--    刪除菜品-->
+    <delete id="delete">
+        DELETE FROM dish WHERE id IN
+        <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
-    <select id="pageQuery" resultType="com.sky.entity.Dish">
-        select * from dish
+    <select id="pageQuery" resultType="com.sky.vo.DishVO">
+        select d.*,c.name as categoryName , f.value as flavors from dish d left outer join category c  on d.category_id = c.id
+        LEFT OUTER JOIN dish_flavor f ON d.id = f.dish_id
+
         <where>
             <if test="name!=null and name !=''">
-                and name like concat('%',#{name},'%'),
+                and d.name like concat('%',#{name},'%'),
             </if>
 
             <if test="categoryId!=null and categoryId !=''">
-                categoryId=#{categoryId},
+                d.categoryId=#{categoryId},
             </if>
             <if test="status!=null and status !=''">
-                status=#{status},
+                d.status=#{status},
             </if>
         </where>
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.SetmealMapper">
+    <!--    刪除菜品-->
+    <delete id="delete">
+        DELETE FROM setmeal_dish WHERE dish_id IN
+        <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--查询套餐id-->
+    <select id="getSetmelIds">
+        select setmeal_id from setmeal_dish where dish_id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!--更新接口-->
+    <!--    <update id="update" parameterType="Employee">-->
+    <!--        update employee-->
+    <!--        <set>-->
+    <!--            <if test="status !=null">-->
+    <!--                status =#{status},-->
+    <!--            </if>-->
+    <!--            <if test="username!=null and username !=''">-->
+    <!--                username =#{username},-->
+    <!--            </if>-->
+
+    <!--            <if test="name!=null and name !=''">-->
+    <!--                name =#{name},-->
+    <!--            </if>-->
+
+    <!--            <if test="sex!=null and sex !=''">-->
+    <!--                sex =#{sex},-->
+    <!--            </if>-->
+
+    <!--            <if test="phone!=null and phone !=''">-->
+    <!--                phone =#{phone},-->
+    <!--            </if>-->
+    <!--            <if test="idNumber!=null and idNumber !=''">-->
+    <!--                id_number =#{idNumber}-->
+    <!--            </if>-->
+    <!--        </set>-->
+    <!--        where id =#{id}-->
+    <!--    </update>-->
+</mapper>
