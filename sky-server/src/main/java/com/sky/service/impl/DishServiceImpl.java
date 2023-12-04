@@ -56,12 +56,15 @@ public class DishServiceImpl implements DishService {
         // 遍历每一个list
         List<DishFlavor> flavors = dishDTO.getFlavors();
 
-        for (int i = 0; i < flavors.size(); i++) {
-            DishFlavor f = flavors.get(i);
-            f.setDishId(dish.getId());
-            log.info("获取到的菜品id{}",dish.getId());
-            dishFlavorMapper.insert(f);
+        if(flavors!=null && flavors.size()!=0) {
+            for (int i = 0; i < flavors.size(); i++) {
+                DishFlavor f = flavors.get(i);
+                f.setDishId(dish.getId());
+                log.info("获取到的菜品id{}",dish.getId());
+                dishFlavorMapper.insert(f);
 
+            }
         }
+
     }
 }

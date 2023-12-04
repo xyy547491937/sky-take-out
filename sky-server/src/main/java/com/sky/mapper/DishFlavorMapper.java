@@ -7,13 +7,14 @@ import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface DishFlavorMapper {
 
     /*
     * 新增口味表
     * */
-    @AutoFill(value = OperationType.INSERT)
     @Insert("insert into dish_flavor( dish_id, name, value) VALUES (#{dishId},#{name},#{value})")
     void insert(DishFlavor dishFlavor);
 }
