@@ -48,7 +48,9 @@ public class DishServiceImpl implements DishService {
     @Override
     public void insert(DishDTO dishDTO) {
         Dish dish = new Dish();
+        // 属性合并
         BeanUtils.copyProperties(dishDTO,dish);
+
         dishMapper.insert(dish);
 
         // 遍历每一个list
