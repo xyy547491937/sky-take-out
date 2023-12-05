@@ -11,7 +11,7 @@
     </delete>
 
     <!--查询套餐id-->
-    <select id="getSetmelIds">
+    <select id="getSetmelIds" resultType="com.sky.dto.SetmealDTO">
         select setmeal_id from setmeal_dish where dish_id in
         <foreach collection="ids" item="id" separator="," open="(" close=")">
             #{id}

@@ -6,6 +6,7 @@ import com.sky.entity.Dish;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
+import com.sky.vo.DishVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -30,33 +31,44 @@ public class DishController {
     }
 
     @GetMapping("/{id}")
-    public Result<Dish> getDishById(@PathVariable Integer id) {
+    public Result<DishVO> getDishById(@PathVariable Long id) {
         log.info("根据菜品id 查询 菜品详情{}", id);
-        Dish dish = dishService.getDishById(id);
+        DishVO dish = dishService.getDishById(id);
         return Result.success(dish);
     }
 
     /*
-    * 新增菜品
-    * */
+     * 新增菜品
+     * */
     @ApiOperation("新增菜品")
     @PostMapping
     public Result insert(@RequestBody DishDTO dishDTO) {
-        log.info("新增菜品数据为{}",dishDTO);
+        log.info("新增菜品数据为{}", dishDTO);
         dishService.insert(dishDTO);
         return Result.success("新增成功");
     }
+    /*
+     * 修改菜品
+     * */
+
+    @ApiOperation("修改菜品")
+    @PutMapping
+    public Result update(@RequestBody DishDTO dishDTO) {
+        log.info("修改菜品数据为{}", dishDTO);
+        dishService.update(dishDTO);
+        return Result.success("修改成功");
+    }
 
     /*
-    * 刪除菜品
-    * */
+     * 刪除菜品
+     * */
 
 
     @ApiOperation("刪除菜品")
     @DeleteMapping
     public Result delete(@RequestParam("ids") List<Long> ids) {
-        log.info("刪除菜品{}",ids);
+        log.info("刪除菜品{}", ids);
         dishService.delete(ids);
-       return  Result.success("删除成功");
+        return Result.success("删除成功");
     }
 }

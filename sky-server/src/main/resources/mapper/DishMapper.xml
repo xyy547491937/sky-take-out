@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sky.mapper.DishMapper">
-<!--    刪除菜品-->
+
+    <!--    刪除菜品-->
     <delete id="delete">
         DELETE FROM dish WHERE id IN
         <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
@@ -11,8 +12,8 @@
     </delete>
 
     <select id="pageQuery" resultType="com.sky.vo.DishVO">
-        select d.*,c.name as categoryName , f.value as flavors from dish d left outer join category c  on d.category_id = c.id
-        LEFT OUTER JOIN dish_flavor f ON d.id = f.dish_id
+        select d.*,c.name as categoryName  from dish d left outer join category c  on d.category_id = c.id
+
 
         <where>
             <if test="name!=null and name !=''">
@@ -31,31 +32,38 @@
 
     </select>
     <!--更新接口-->
-<!--    <update id="update" parameterType="Employee">-->
-<!--        update employee-->
-<!--        <set>-->
-<!--            <if test="status !=null">-->
-<!--                status =#{status},-->
-<!--            </if>-->
-<!--            <if test="username!=null and username !=''">-->
-<!--                username =#{username},-->
-<!--            </if>-->
+    <update id="update" parameterType="com.sky.dto.DishDTO">
+        update dish
+        <set>
+            <if test="status !=null">
+                status =#{status},
+            </if>
+            <if test="price!=null and price !=''">
+                price =#{price},
+            </if>
 
-<!--            <if test="name!=null and name !=''">-->
-<!--                name =#{name},-->
-<!--            </if>-->
+            <if test="name!=null and name !=''">
+                name =#{name},
+            </if>
 
-<!--            <if test="sex!=null and sex !=''">-->
-<!--                sex =#{sex},-->
-<!--            </if>-->
+            <if test="image!=null and image !=''">
+                image =#{image},
+            </if>
 
-<!--            <if test="phone!=null and phone !=''">-->
-<!--                phone =#{phone},-->
-<!--            </if>-->
-<!--            <if test="idNumber!=null and idNumber !=''">-->
-<!--                id_number =#{idNumber}-->
-<!--            </if>-->
-<!--        </set>-->
-<!--        where id =#{id}-->
-<!--    </update>-->
+            <if test="description!=null and description !=''">
+                description =#{description},
+            </if>
+            <if test="categoryId!=null and categoryId !=''">
+                category_id =#{categoryId},
+            </if>
+            <if test="updateTime!=null">
+                update_time =#{updateTime},
+            </if>
+
+            <if test="updateUser!=null">
+                update_User =#{updateUser}
+            </if>
+        </set>
+        where id =#{id}
+    </update>
 </mapper>
