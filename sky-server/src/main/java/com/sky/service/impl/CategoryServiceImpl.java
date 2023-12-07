@@ -129,4 +129,15 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> list(Integer type) {
         return categoryMapper.list(type);
     }
+
+
+/*
+* 查询所有分分类
+* */
+    @Override
+    public List<Category> getALlPage(Integer type) {
+        List<Category> category = categoryMapper.getALlPage(type);
+       return category;
+    }
+
 }

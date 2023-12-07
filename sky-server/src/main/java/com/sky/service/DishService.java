@@ -27,4 +27,9 @@ public interface DishService {
 * 修改菜品
 * */
     void update(DishDTO dishDTO);
+
+    /*
+    * c端 根据分类id 查询菜品信息
+    * */
+    List<DishVO> getDishByCid(Integer categoryId);
 }
