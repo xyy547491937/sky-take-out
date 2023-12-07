@@ -43,9 +43,16 @@ sky:
     admin-ttl: 7200000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+    user-secret-key: itheima
+    user-ttl: 7200000
+    user-token-name: authentication
 
+  wechat:
+    appid: wx2560139b65f5f79a
+    secret: 3156b60aa6ff6e9ac5329a4224e021e5
 qiniu:
   access-key: c85fQObE2fr9hP0jVerIMXFqJ36mh6QM7tntEeM_
   bucket-name: sky-take-outs
   secret-key: _CLSqhPo-w9Leoo-O-urkyGjZCK4WjMG6DCZrkOI
   domain: http://s51epl752.hb-bkt.clouddn.com
+

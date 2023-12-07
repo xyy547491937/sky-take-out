@@ -46,4 +46,8 @@ public interface CategoryService {
      * @return
      */
     List<Category> list(Integer type);
+/*
+* 获取所有的分类接口 c端
+* */
+List<Category> getALlPage(Integer type);
 }

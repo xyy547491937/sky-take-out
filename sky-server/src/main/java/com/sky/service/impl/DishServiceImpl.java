@@ -140,4 +140,19 @@ public class DishServiceImpl implements DishService {
 
 
     }
+
+    @Override
+    public List<DishVO> getDishByCid(Integer categoryId) {
+        // 根据分类id 查询菜品 所有的信息
+        List<DishVO> dishs = dishMapper.getDishByCid(categoryId);
+
+        for (DishVO dish : dishs) {
+            List<DishFlavor> flavors = dishFlavorMapper.getDishById(dish.getId());
+
+            dish.setFlavors(flavors);
+
+        }
+
+        return dishs;
+    }
 }
