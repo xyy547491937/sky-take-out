@@ -6,3 +6,8 @@ sky:
     database: my0419194
     username: my0419194
     password: xyy13011328679
+  redis:
+    host: localhost
+    port: 6379
+    password: ""
+    database: 0
