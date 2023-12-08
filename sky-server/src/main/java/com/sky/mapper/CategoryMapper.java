@@ -17,6 +17,7 @@ public interface CategoryMapper {
 
     /**
      * 插入数据
+     *
      * @param category
      */
     @AutoFill(value = OperationType.INSERT)
@@ -27,6 +28,7 @@ public interface CategoryMapper {
 
     /**
      * 分页查询
+     *
      * @param categoryPageQueryDTO
      * @return
      */
@@ -34,6 +36,7 @@ public interface CategoryMapper {
 
     /**
      * 根据id删除分类
+     *
      * @param id
      */
     @Delete("delete from category where id = #{id}")
@@ -41,6 +44,7 @@ public interface CategoryMapper {
 
     /**
      * 根据id修改分类
+     *
      * @param category
      */
     @AutoFill(value = OperationType.UPDATE)
@@ -48,13 +52,25 @@ public interface CategoryMapper {
 
     /**
      * 根据类型查询分类
+     *
      * @param type
      * @return
      */
     List<Category> list(Integer type);
-/*
-* 根据类型查询所有分类
-* */
-    //@Select("select * from category where type =#{type}")
+    /*
+     * 根据类型查询所有分类
+     */
+    // @Select("select * from category where type =#{type}")
+
+    /*
+     * 根据类型查询所有分类
+     */
+    @Select("select * from category where type =#{type}")
     List<Category> getALlPage(Integer type);
+
+    /*
+     * 根据分类id 查询所有数据
+     */
+    @Select("select *from category where id =#{categoryId}")
+    Category getCategoryById(Long categoryId);
 }

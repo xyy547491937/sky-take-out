@@ -71,4 +71,11 @@ public class DishController {
         dishService.delete(ids);
         return Result.success("删除成功");
     }
+
+    @ApiOperation("菜品分类查询")
+    @GetMapping("/list")
+    public Result<List<DishVO>> page(@RequestParam Integer categoryId) {
+        List<DishVO> result = dishService.getDishByCid(categoryId);
+        return Result.success(result);
+    }
 }

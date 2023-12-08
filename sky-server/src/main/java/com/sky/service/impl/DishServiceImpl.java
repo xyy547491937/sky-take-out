@@ -5,8 +5,10 @@ import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
+import com.sky.dto.SetmealDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
+import com.sky.entity.Setmeal;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
@@ -101,7 +103,7 @@ public class DishServiceImpl implements DishService {
         }
 
         // 当前菜品是否被套餐关联，关联不能删除
-        List<Long> setmealIds = setmealMapper.getSetmelIds(ids);
+        List<SetmealDTO> setmealIds = setmealMapper.getSetmelIds(ids);
         if (setmealIds != null && setmealIds.size() > 0) {
             throw new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
         }
