@@ -55,6 +55,6 @@ public interface CategoryMapper {
 /*
 * 根据类型查询所有分类
 * */
-    @Select("select * from category where type =#{type}")
+    //@Select("select * from category where type =#{type}")
     List<Category> getALlPage(Integer type);
 }

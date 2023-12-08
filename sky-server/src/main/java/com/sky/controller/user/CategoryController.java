@@ -33,7 +33,7 @@ public class CategoryController {
      */
     @GetMapping("/list")
     @ApiOperation("c端查询分类接口")
-    public Result<List<Category>> getALlPage(@RequestParam(value = "type",defaultValue = "1") Integer type){
+    public Result<List<Category>> getALlPage(@RequestParam(value = "type",defaultValue = "") Integer type){
         log.info("分页查询：{}", type);
         List<Category> result = categoryService.getALlPage(type);
         return Result.success(result);
