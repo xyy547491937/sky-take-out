@@ -9,6 +9,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -27,6 +29,7 @@ public class SetmealController {
      */
     @GetMapping("/page")
     @ApiOperation("套餐分类分页查询")
+//   @Cacheable(cacheNames = "setmealCache",key ="#setmealPageQueryDTO.categoryId")
     public Result<PageResult> page(SetmealPageQueryDTO setmealPageQueryDTO) {
         log.info("分页查询：{}", setmealPageQueryDTO);
         PageResult pageResult = setmealService.pageQuery(setmealPageQueryDTO);
@@ -40,6 +43,7 @@ public class SetmealController {
 
     @PostMapping
     @ApiOperation("新增套餐")
+    @CacheEvict(cacheNames = "setmealCache",key="#setmealDTO.id")
     public Result save(@RequestBody SetmealDTO setmealDTO) {
 
         setmealService.save(setmealDTO);
@@ -48,6 +52,7 @@ public class SetmealController {
 
     @GetMapping("/{id}")
     @ApiOperation("根据id查询套餐详情")
+    @Cacheable(cacheNames = "setmealCache",key ="#id")
     public Result<SetmealDTO> getSetmealById(@PathVariable Long id) {
         log.info("根据套餐id 获取套餐详情：{}", id);
         SetmealDTO result = setmealService.getSetmealById(id);
@@ -56,6 +61,7 @@ public class SetmealController {
 
     @PutMapping
     @ApiOperation("修改套餐")
+    @CacheEvict(cacheNames = "setmealCache",allEntries = true)
     public Result update(@RequestBody  SetmealDTO setmealDTO) {
         log.info("修改套餐上送的详情：{}", setmealDTO);
          setmealService.update(setmealDTO);
